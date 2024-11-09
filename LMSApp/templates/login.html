@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %}Login{% endblock %}
+
+{% block headcontinue %}
+<style>
+.container {
+    max-width: 600px; /* Control the maximum width */
+    margin: auto; /* Center the container */
+    padding: 20px; /* Add some padding */
+    background: #fff; /* White background for the form */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Spacing between form fields */
+}
+
+.form-control {
+    width: 100%; /* Full width for input fields */
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.btn-primary {
+    background-color: #4CAF50; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    padding: 10px; /* Padding inside button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+}
+
+.btn-primary:hover {
+    background-color: #45a049; /* Darker shade on hover */
+}
+</style>
+{% endblock %}
+
+{% block bodycontent %}
+<div class="container">
+    <h2 style="text-align: center;">Login</h2>
+
+    <form method="post" style="max-width: 400px; margin: auto;">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+    </form>
+
+    {% if messages %}
+    <ul style="color: red; text-align: center; margin-top: 10px;">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <p style="text-align: center; margin-top: 20px;">
+        Don't have an account? <a href="{% url 'signup' %}">Sign up here</a>.
+    </p>
+</div>
+
+{% endblock %}

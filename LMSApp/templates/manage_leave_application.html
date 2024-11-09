@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} Admin Dashboard {% endblock %}
+
+{% block bodycontent %}
+<div name="manageapl">
+    <h3>Admin Dashboard</h3>
+
+    <h2><a href="{% url 'employee_list' %}" employees>Manage Employees</a></h2>
+
+    <h1>Manage Leave Application</h1>
+    <p>Employee ID: {{ leave_apl.empid }}</p>sss
+    <p>Application Date: {{ leave_apl.apl_date }}</p>
+    <p>Leave Date: {{ leave_apl.leaveDate }}</p>
+    <p>Return Date: {{ leave_apl.returnDate }}</p>
+    <p>Reason: {{ leave_apl.get_reason_display }}</p>
+    <p>Status: {{ leave_apl.get_status_display }}</p>
+
+<form method="post" name="updatestatus">
+    {% csrf_token %}
+    <label for="status">Update Status:</label>
+    <select name="status">
+        <option value="ACP">Accept</option>
+        <option value="REJ">Reject</option>
+        <option value="DEF">Defer</option>
+    </select>
+    <button type="submit">Update Status</button>
+</form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} New Application {% endblock %}
+
+{% block headcontinue %}
+<title>Apply for Leave</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% endblock %}
+
+{% block bodycontent %}
+<div class="container mt-5">
+    <h2>Apply for Leave</h2>
+    <form method="POST" id="leaveForm">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+        <a href="{% url 'history' %}" class="btn btn-link">View Application History</a>
+    </form>
+</div>
+
+<script>
+    document.getElementById('leaveForm').onsubmit = function () {
+        const leaveDate = new Date(document.querySelector('input[name="leaveDate"]').value);
+        const returnDate = new Date(document.querySelector('input[name="returnDate"]').value);
+
+        if (returnDate <= leaveDate) {
+            alert("Return date must be after the leave date.");
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    };
+</script>
+{% endblock %}

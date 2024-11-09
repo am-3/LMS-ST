@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} New Application {% endblock %}
+
+{% block headcontinue %} 
+<title>Apply for Leave</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+{% endblock %}
+
+{% block bodycontent %}
+<div class="container">
+    <h2>Update Leave Application Status</h2>
+<p><strong>Application ID:</strong> {{ leave_application.aplid }}</p>
+<p><strong>Employee ID:</strong> {{ leave_application.empid }}</p>
+<p><strong>Application Date:</strong> {{ leave_application.apl_date }}</p>
+<p><strong>Leave Start Date:</strong> {{ leave_application.leaveDate }}</p>
+<p><strong>Return Date:</strong> {{ leave_application.returnDate }}</p>
+<p><strong>Reason:</strong> {{ leave_application.reason }}</p>
+<p><strong>Status:</strong> {{ leave_application.status }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" name="status" value="ACP" class="btn btn-success">Approve</button>
+    <button type="submit" name="status" value="REJ" class="btn btn-danger">Reject</button>
+</form>
+
+<a href="{% url 'admindashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+
+</div>
+{% endblock %}

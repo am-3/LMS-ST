@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} Admin: Manage Employee {% endblock %}
+
+{% block bodycontent %}
+<h2>Employee List</h2>
+<table>
+    <tr>
+        <th>Emp ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    {% for employee in employees %}
+    <tr>
+        <td>{{ employee.empid }}</td>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>
+            <a href="{% url 'employee_update' employee.pk %}">Edit</a> |
+            <a href="{% url 'employee_delete' employee.pk %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'employee_create' %}">Add New Employee</a>
+
+{% endblock %}

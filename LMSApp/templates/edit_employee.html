@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} Admin: Add Employee {% endblock %}
+
+{% block bodycontent %}
+<h1>Edit Employee</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }} <!-- This renders the form fields with appropriate HTML -->
+    <button type="submit">Save Changes</button>
+</form>
+
+<a href="{% url 'employee_list' %}">Back to Employee List</a>
+{% endblock %}

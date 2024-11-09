@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} Admin: Add Employee {% endblock %}
+
+{% block bodycontent %}
+<h2>{% if form.instance.pk %}Edit Employee{% else %}Add Employee{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'employee_list' %}">Cancel</a>
+
+{% endblock %}

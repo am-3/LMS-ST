@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} Admin: Add Employee {% endblock %}
+
+{% block bodycontent %}
+<h1>Are you sure you want to delete {{ employee.name }}?</h1>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+</form>
+<a href="{% url 'employee_list' %}">Cancel</a>
+
+{% endblock %}

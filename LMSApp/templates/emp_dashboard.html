@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} Dashboard {% endblock %}
+
+{% block headcontinue %}
+<style>
+    .legend {
+        margin-top: 30px;
+        padding: 10px;
+        background-color: #f4f4f4;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .legend-column {
+        flex: 1;
+        /* Flex-grow to evenly distribute space */
+        margin: 0 10px;
+        /* Margin between columns */
+    }
+
+    .legend h3 {
+        margin: 0 0 10px;
+        color: #4CAF50;
+    }
+
+    .legend ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .legend li {
+        margin: 5px 0;
+    }
+</style>
+{% endblock %}
+
+{% block bodycontent %}
+
+<div class="container">
+    <h2>Welcome, {{ user.username }}!</h2>
+    <h3>Your Leave Statistics</h3>
+
+    <ul>
+        <li>Pending Leaves: {{ pending_leaves }}</li>
+        <li>Accepted Leaves: {{ accepted_leaves }}</li>
+        <li>Upcoming Accepted Leaves: {{ upcoming_leaves }}</li> <!-- Updated for clarity -->
+    </ul>
+
+    <h4>Your Leave Applications</h4>
+
+    {% if leave_applications %}
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th style="padding: 8px; border: 1px solid #ddd;">Application ID</th>
+                <th style="padding: 8px; border: 1px solid #ddd;">Leave Start Date</th>
+                <th style="padding: 8px; border: 1px solid #ddd;">Return Date</th>
+                <th style="padding: 8px; border: 1px solid #ddd;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in leave_applications %}
+            <tr>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ application.aplid }}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ application.leaveDate }}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ application.returnDate }}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">{{ application.status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="padding: 8px; border: 1px solid #ddd; text-align: center;">No leave applications
+                    found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No leave applications found.</p>
+    {% endif %}
+
+    <h4>Upcoming Leaves</h4>
+    <ul>
+        {% for application in leave_applications %}
+        {% if application.leaveDate > today %}
+        <li>
+            Leave on: {{ application.leaveDate }} |
+            Status: {{ application.status }}
+        </li>
+        {% endif %}
+        {% empty %}
+        <li>No upcoming leaves.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="legend">
+        <div class="legend-column">
+            <h3>Leave Reasons</h3>
+            <ul>
+                <li><strong>PER:</strong> Personal Leave</li>
+                <li><strong>OFI:</strong> Official Work</li>
+                <li><strong>PTO:</strong> Paid Time Off</li>
+                <li><strong>EMR:</strong> Emergency</li>
+            </ul>
+        </div>
+        <div class="legend-column">
+            <h3>Leave Statuses</h3>
+            <ul>
+                <li><strong>SUB:</strong> Submitted</li>
+                <li><strong>ACP:</strong> Accepted</li>
+                <li><strong>REJ:</strong> Rejected</li>
+                <li><strong>DEF:</strong> Deferred</li>
+            </ul>
+        </div>
+    </div>
+
+    <form method="post" action="#">
+        {% csrf_token %}
+        <button type="submit" name="refresh" value="refresh">Refresh</button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} Admin Dashboard {% endblock %}
+
+{% block headcontinue %} 
+<title>Apply for Leave</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+{% endblock %}
+
+{% block bodycontent %}
+<h3>Admin Dashboard</h3>
+
+<h2><a href="{% url 'employee_list' %}">Manage Employees</a></h2>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="container">
+    <h1>Leave Applications</h1>
+    {% if leave_applications %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Application ID</th>
+                <th>Employee ID</th>
+                <th>Application Date</th>
+                <th>Leave Start Date</th>
+                <th>Return Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in leave_applications %}
+            <tr>
+                <td>{{ application.aplid }}</td>
+                <td>{{ application.empid }}</td>
+                <td>{{ application.apl_date }}</td>
+                <td>{{ application.leaveDate }}</td>
+                <td>{{ application.returnDate }}</td>
+                <td>{{ application.reason }}</td>
+                <td>{{ application.status }}</td>
+                <td>
+                    <form action="{% url 'update_leave_status' application.aplid %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" name="status" value="ACP" class="btn btn-success">Approve</button>
+                        <button type="submit" name="status" value="REJ" class="btn btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No leave applications found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

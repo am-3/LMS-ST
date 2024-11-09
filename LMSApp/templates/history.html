@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} Leave History {% endblock %}
+
+{% block headcontinue %}
+    <style>
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        .no-applications {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #777;
+        }
+
+        .legend {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .legend-column {
+            flex: 1; /* Flex-grow to evenly distribute space */
+            margin: 0 10px; /* Margin between columns */
+        }
+
+        .legend h3 {
+            margin: 0 0 10px;
+            color: #4CAF50;
+        }
+
+        .legend ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .legend li {
+            margin: 5px 0;
+        }
+    </style>
+{% endblock %}
+
+{% block bodycontent %}
+<h1>Leave Applications History</h1>
+
+{% if leave_applications %}
+<table>
+    <thead>
+        <tr>
+            <th>Application ID</th>
+            <th>Employee ID</th>
+            <th>Application Date</th>
+            <th>Leave Start Date</th>
+            <th>Return Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in leave_applications %}
+        <tr>
+            <td>{{ app.0 }}</td> <!-- Application ID -->
+            <td>{{ app.1 }}</td> <!-- Employee ID -->
+            <td>{{ app.2 }}</td> <!-- Application Date -->
+            <td>{{ app.3 }}</td> <!-- Leave Start Date -->
+            <td>{{ app.4 }}</td> <!-- Return Date -->
+            <td>{{ app.5 }}</td> <!-- Reason -->
+            <td>{{ app.6 }}</td> <!-- Status with full name -->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="no-applications">No leave applications found.</p>
+{% endif %}
+
+<!-- Side-by-Side Legend Section -->
+<div class="legend">
+    <div class="legend-column">
+        <h3>Leave Reasons</h3>
+        <ul>
+            <li><strong>PER:</strong> Personal Leave</li>
+            <li><strong>OFI:</strong> Official Work</li>
+            <li><strong>PTO:</strong> Paid Time Off</li>
+            <li><strong>EMR:</strong> Emergency</li>
+        </ul>
+    </div>
+    <div class="legend-column">
+        <h3>Leave Statuses</h3>
+        <ul>
+            <li><strong>SUB:</strong> Submitted</li>
+            <li><strong>ACP:</strong> Accepted</li>
+            <li><strong>REJ:</strong> Rejected</li>
+            <li><strong>DEF:</strong> Deferred</li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

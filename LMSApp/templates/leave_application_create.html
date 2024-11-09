@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} New Application {% endblock %}
+
+{% block bodycontent %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Leave Application</button>
+</form>
+{% endblock %}

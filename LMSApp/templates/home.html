@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titlebar %} Home {% endblock %}
+
+{% block headcontinue %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            margin: 20px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        .function-card {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .function-card p {
+            margin: 10px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #777;
+        }
+    </style>
+{% endblock %}
+
+{% block bodycontent %} 
+
+<body>
+
+    <header>
+        <h1>Welcome to the Leave Management System</h1>
+    </header>
+
+    <div class="container">
+
+        <div class="function-card">
+            <h3>Employee Dashboard</h3>
+            <p>View your leave balance, upcoming leaves, and pending applications.</p>
+            <a href="{% url 'dashboard' %}">Go to Employee Dashboard</a>
+        </div>
+
+        <div class="function-card">
+            <h3>Apply for Leave</h3>
+            <p>Submit a leave application for your personal or official requirements.</p>
+            <a href="{% url 'apply' %}">Go to Apply Page</a>
+        </div>
+
+        <div class="function-card">
+            <h3>View Leave History</h3>
+            <p>Check your past leave applications and their statuses.</p>
+            <a href="{% url 'history' %}">Go to History Page</a>
+        </div>
+
+        <div class="function-card">
+            <h3>Admin Dashboard</h3>
+            <p>Manage leave applications and employee details as an administrator.</p>
+            <a href="{% url 'admindashboard' %}">Go to Admin Dashboard</a>
+        </div>
+
+        <div class="function-card">
+            <h3>Manage Employees</h3>
+            <p>Access and modify employee details for effective management.</p>
+            <a href="{% url 'employee_list' %}">Go to Employee Management</a>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Leave Management System. All rights reserved.</p>
+    </div>
+    
+</body>
+</html>
+
+{% endblock %}
